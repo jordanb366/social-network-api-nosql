@@ -1,6 +1,6 @@
 // Thought controller code will go here
 
-const { User, Thought } = require("../models");
+const { User, Thought, Reaction } = require("../models");
 
 module.exports = {
   // Get all thoughts
@@ -20,8 +20,8 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  // Create a course
-  createCourse(req, res) {
+  // Create a thought
+  createThought(req, res) {
     Thought.create(req.body)
       .then((course) => res.json(course))
       .catch((err) => {
@@ -52,6 +52,26 @@ module.exports = {
           ? res.status(404).json({ message: "No thought with this id!" })
           : res.json(thought)
       )
+      .catch((err) => res.status(500).json(err));
+  },
+  // Create a reaction
+  createReaction(req, res) {
+    Reaction.create(req.body)
+      .then((course) => res.json(course))
+      .catch((err) => {
+        console.log(err);
+        return res.status(500).json(err);
+      });
+  },
+  // Delete a reaction
+  deleteReaction(req, res) {
+    Reaction.findOneAndDelete({ _id: req.params.reactionId })
+      .then((reaction) =>
+        !reaction
+          ? res.status(404).json({ message: "No reaction with that ID" })
+          : Thought.deleteMany({ _id: { $in: reaction.thought } })
+      )
+      .then(() => res.json({ message: "Thought and reaction deleted!" }))
       .catch((err) => res.status(500).json(err));
   },
 };

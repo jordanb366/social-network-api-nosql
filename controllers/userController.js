@@ -61,16 +61,16 @@ module.exports = {
       .then((user) =>
         !user
           ? res.status(404).json({ message: "No such user exists" })
-          : User.findOneAndUpdate(
+          : Thought.findOneAndUpdate(
               { users: req.params.userId },
               { $pull: { users: req.params.userId } },
               { new: true }
             )
       )
-      .then((friend) =>
-        !friend
+      .then((thought) =>
+        !thought
           ? res.status(404).json({
-              message: "User deleted, but no matching friend found",
+              message: "User deleted, but no matching thought found",
             })
           : res.json({ message: "User successfully deleted" })
       )

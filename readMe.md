@@ -13,4 +13,4 @@ A NoSQL Social Network API, using MongoDB, Mongoose and ExpressJS with NodeJS. T
 
 ## Link to app demo
 
-[App Demo Link](http://google.com)
+[App Demo Link](https://drive.google.com/file/d/1FUygZOmEjBR4LwiOcnjXSr48meHYkB29/view)

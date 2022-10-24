@@ -1,27 +1,8 @@
-// Seeds will go here for data
+// Seeds data
 
 const users = ["TestUser", "TestUser2", "TestUser3", "TestUser4"];
 
-const userThoughts = [
-  "Decision Tracker",
-  "Find My Phone",
-  "Learn Piano",
-  "Starbase Defender",
-  "Tower Defense",
-  "Monopoly Money Manager",
-  "Movie trailers",
-  "Hello world",
-  "Stupid Social Media App",
-  "Notes",
-  "Messages",
-  "Email",
-  "Compass",
-  "Firefox",
-  "Running app",
-  "Cooking app",
-  "Poker",
-  "Deliveries",
-];
+const userThoughts = ["Test thought", "Test thought 2"];
 
 // Get a random item given an array
 const getRandomArrItem = (arr) => arr[Math.floor(Math.random() * arr.length)];

@@ -1,7 +1,8 @@
 const router = require("express").Router();
 
-// User routes will go here
+// User routes
 
+// Routes from controller
 const {
   getUsers,
   getSingleUser,

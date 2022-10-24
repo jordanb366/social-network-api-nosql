@@ -1,5 +1,5 @@
-// Thought controller code will go here
-
+// Thought controller
+// From the models
 const { User, Thought, Reaction } = require("../models");
 
 module.exports = {
@@ -68,7 +68,7 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  // Create a reaction and add the reaction to the thought
+  // Create a reaction and add the reaction to the thought by the params id
   createReaction(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
@@ -84,7 +84,7 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  // Delete a reaction
+  // Delete a reaction by thoughtId from params
   deleteReaction(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },

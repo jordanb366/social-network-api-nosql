@@ -55,7 +55,7 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 
-  // Delete a user by its params userId
+  // Delete a user by its params userId, delete any thought associated
   deleteUser(req, res) {
     User.findOneAndDelete({ _id: req.params.userId })
       .then((user) =>
@@ -69,7 +69,7 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 
-  // Add a friend
+  // Add a friend by params userId
   addFriend(req, res) {
     console.log("You are adding a friend");
     console.log(req.body);
@@ -86,7 +86,7 @@ module.exports = {
       })
       .catch((err) => res.status(500).json(err));
   },
-  // Remove a friend from a user
+  // Remove a friend by params userId
   removeFriend(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },

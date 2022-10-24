@@ -1,4 +1,4 @@
-// Seeds will go here for data
+// Seeds
 const connection = require("../config/connection");
 const { User, Thought, Reaction } = require("../models");
 const { getRandomUser, getRandomThoughts } = require("./data");
@@ -17,7 +17,7 @@ connection.once("open", async () => {
   // Create empty array to hold the users
   const users = [];
 
-  // Loop 20 times -- add users to the users array
+  // Loop 2 times -- add users to the users array
   for (let i = 0; i < 2; i++) {
     const randomUser = getRandomUser();
 

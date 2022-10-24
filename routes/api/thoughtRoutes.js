@@ -1,7 +1,8 @@
 const router = require("express").Router();
 
-// User routes will go here
+// Thought routes
 
+// Routes from controller
 const {
   getThoughts,
   getSingleThought,

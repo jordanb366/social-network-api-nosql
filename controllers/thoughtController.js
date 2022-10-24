@@ -9,7 +9,7 @@ module.exports = {
       .then((thoughts) => res.json(thoughts))
       .catch((err) => res.status(500).json(err));
   },
-  // Get a thought
+  // Get a single thought by it's param thought Id
   getSingleThought(req, res) {
     Thought.findOne({ _id: req.params.thoughtId })
       .select("-__v")
@@ -20,15 +20,7 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  // Create a thought
-  // createThought(req, res) {
-  //   Thought.create(req.body)
-  //     .then((thought) => res.json(thought))
-  //     .catch((err) => {
-  //       console.log(err);
-  //       return res.status(500).json(err);
-  //     });
-  // },
+  // Create a thought and then associate the user with the thought id
   createThought(req, res) {
     Thought.create(req.body)
       .then((thought) => {
@@ -52,18 +44,17 @@ module.exports = {
         res.status(500).json(err);
       });
   },
-  // Delete a thought
+  // Delete a single thought by the thought Id
   deleteThought(req, res) {
-    Thought.findOneAndDelete({ _id: req.params.thoughtId })
+    Thought.findOneAndRemove({ _id: req.params.thoughtId })
       .then((thought) =>
         !thought
-          ? res.status(404).json({ message: "No thought with that ID" })
-          : User.deleteMany({ _id: { $in: thought.users } })
+          ? res.status(404).json({ message: "No thought ID found :(" })
+          : res.json(thought)
       )
-      .then(() => res.json({ message: "Thought and user deleted!" }))
       .catch((err) => res.status(500).json(err));
   },
-  // Update a thought
+  // Update a single thought by it's param thoughtId
   updateThought(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
@@ -77,7 +68,7 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  // Create a reaction
+  // Create a reaction and add the reaction to the thought
   createReaction(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
@@ -100,12 +91,12 @@ module.exports = {
       { $pull: { reactions: req.body } },
       { runValidators: true, new: true }
     )
-      .then((student) =>
-        !student
+      .then((reaction) =>
+        !reaction
           ? res
               .status(404)
-              .json({ message: "No student thought with that ID :(" })
-          : res.json(student)
+              .json({ message: "No reaction with that thought ID :(" })
+          : res.json(reaction)
       )
       .catch((err) => res.status(500).json(err));
   },

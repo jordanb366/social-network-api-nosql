@@ -19,9 +19,6 @@ connection.once("open", async () => {
 
   // Loop 20 times -- add users to the users array
   for (let i = 0; i < 2; i++) {
-    // Get some random assignment objects using a helper function that we imported from ./data
-    // const thoughts = getRandomThoughts(2);
-
     const randomUser = getRandomUser();
 
     users.push({
@@ -53,7 +50,7 @@ connection.once("open", async () => {
   );
 
   // Log out the seed data to indicate what should appear in the database
-  //   console.table(users);
+  console.table(users);
   console.info("Seeding complete! 🌱");
   process.exit(0);
 });

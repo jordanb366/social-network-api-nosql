@@ -17,7 +17,7 @@ module.exports = {
         return res.status(500).json(err);
       });
   },
-  // Get a single user
+  // Get a single user by the params UserId
   getSingleUser(req, res) {
     User.findOne({ _id: req.params.userId })
       .select("-__v")
@@ -40,7 +40,7 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 
-  // Update a user
+  // Update a user by its userID from params
   updateUser(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },
@@ -55,29 +55,18 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 
-  // Delete a user
+  // Delete a user by its params userId
   deleteUser(req, res) {
-    User.findOneAndRemove({ _id: req.params.userId })
+    User.findOneAndDelete({ _id: req.params.userId })
       .then((user) =>
         !user
-          ? res.status(404).json({ message: "No such user exists" })
-          : Thought.findOneAndUpdate(
-              { users: req.params.userId },
-              { $pull: { users: req.params.userId } },
-              { new: true }
-            )
+          ? res.status(404).json({ message: "No user with that ID" })
+          : Thought.deleteMany({ _id: { $in: user.thoughts } })
       )
-      .then((thought) =>
-        !thought
-          ? res.status(404).json({
-              message: "User deleted, but no matching thought found",
-            })
-          : res.json({ message: "User successfully deleted" })
+      .then(() =>
+        res.json({ message: "User and associated thoughts deleted!" })
       )
-      .catch((err) => {
-        console.log(err);
-        res.status(500).json(err);
-      });
+      .catch((err) => res.status(500).json(err));
   },
 
   // Add a friend
@@ -101,7 +90,7 @@ module.exports = {
   removeFriend(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },
-      { $pull: { friends: { friendId: req.params.friendId } } },
+      { $pull: { friends: req.params.friendId } },
       { runValidators: true, new: true }
     )
       .then((user) =>

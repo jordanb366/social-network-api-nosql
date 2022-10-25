@@ -30,8 +30,9 @@ const thoughtSchema = new Schema(
 );
 
 function formattedDate(createdAt) {
-  const date1 = new Date(createdAt);
-  return date1;
+  const date = new Date(createdAt);
+
+  return date.toDateString();
 }
 
 thoughtSchema.virtual("reactionCount").get(function () {
